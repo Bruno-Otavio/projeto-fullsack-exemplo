@@ -19,6 +19,7 @@ model Colaborador {
   cargo     String @db.VarChar(255)
   setor     String @db.VarChar(255)
   pin       String @db.VarChar(8)
+  comentarios  Comentario[]
 }
 
 model Os {
@@ -28,12 +29,15 @@ model Os {
   executor     String?   @db.VarChar(8)
   abertura     DateTime  @default(now())  
   encerramento DateTime?
+  comentarios  Comentario[]
 }
 
 model Comentario {
-  id          Int      @id @default(autoincrement())
-  os          Int
-  colaborador String   @db.VarChar(255)
-  comentario  String   @db.VarChar(8)
-  data        DateTime @default(now())
+  id            Int         @id @default(autoincrement())
+  os            Int
+  colaborador   String      @db.VarChar(255)
+  comentario    String      @db.VarChar(8)
+  data          DateTime    @default(now())
+  oss           Os          @relation(fields: [os], references: [id])
+  colaboradores Colaborador @relation(fields: [colaborador], references: [matricula])
 }
