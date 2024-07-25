@@ -20,7 +20,7 @@ model Colaborador {
   setor       String       @db.VarChar(255)
   pin         String       @db.VarChar(8)
   comentarios Comentario[] @relation("faz")
-  oss         Os[]         @relation("abre")
+  oss         Os[]
   executadas  Os[]         @relation("executor")
 }
 
@@ -32,7 +32,7 @@ model Os {
   abertura      DateTime     @default(now())  
   encerramento  DateTime?
   comentarios   Comentario[] @relation("possui")
-  colaboradores Colaborador  @relation("abre", fields: [colaborador], references: [matricula])
+  colaboradores Colaborador  @relation(fields: [colaborador], references: [matricula])
   executores    Colaborador? @relation("executor", fields: [executor], references: [matricula])
 }
 
