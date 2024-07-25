@@ -29,3 +29,11 @@ model Os {
   abertura     DateTime  @default(now())  
   encerramento DateTime?
 }
+
+model Comentario {
+  id          Int      @id @default(autoincrement())
+  os          Int
+  colaborador String   @db.VarChar(255)
+  comentario  String   @db.VarChar(8)
+  data        DateTime @default(now())
+}
