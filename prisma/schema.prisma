@@ -20,3 +20,12 @@ model Colaborador {
   setor     String @db.VarChar(255)
   pin       String @db.VarChar(8)
 }
+
+model Os {
+  id           Int       @id @default(autoincrement())
+  descricao    String    @db.VarChar(255)
+  colaborador  String    @db.VarChar(8)
+  executor     String?   @db.VarChar(8)
+  abertura     DateTime  @default(now())  
+  encerramento DateTime?
+}
