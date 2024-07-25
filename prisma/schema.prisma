@@ -12,3 +12,11 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
+
+model Colaborador {
+  matricula String @db.VarChar(255) @id 
+  nome      String @db.VarChar(255)
+  cargo     String @db.VarChar(255)
+  setor     String @db.VarChar(255)
+  pin       String @db.VarChar(8)
+}
