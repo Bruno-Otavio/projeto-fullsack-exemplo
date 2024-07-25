@@ -14,22 +14,26 @@ datasource db {
 }
 
 model Colaborador {
-  matricula String @db.VarChar(255) @id 
-  nome      String @db.VarChar(255)
-  cargo     String @db.VarChar(255)
-  setor     String @db.VarChar(255)
-  pin       String @db.VarChar(8)
-  comentarios  Comentario[]
+  matricula   String       @db.VarChar(255) @id 
+  nome        String       @db.VarChar(255)
+  cargo       String       @db.VarChar(255)
+  setor       String       @db.VarChar(255)
+  pin         String       @db.VarChar(8)
+  comentarios Comentario[] @relation("faz")
+  oss         Os[]
+  executadas  Os[]         @relation("executor")
 }
 
 model Os {
-  id           Int       @id @default(autoincrement())
-  descricao    String    @db.VarChar(255)
-  colaborador  String    @db.VarChar(8)
-  executor     String?   @db.VarChar(8)
-  abertura     DateTime  @default(now())  
-  encerramento DateTime?
-  comentarios  Comentario[]
+  id            Int          @id @default(autoincrement())
+  descricao     String       @db.VarChar(255)
+  colaborador   String       @db.VarChar(8)
+  executor      String?      @db.VarChar(8)
+  abertura      DateTime     @default(now())  
+  encerramento  DateTime?
+  comentarios   Comentario[] @relation("possui")
+  colaboradores Colaborador  @relation(fields: [colaborador], references: [matricula])
+  executores    Colaborador? @relation("executor", fields: [executor], references: [matricula])
 }
 
 model Comentario {
@@ -38,6 +42,6 @@ model Comentario {
   colaborador   String      @db.VarChar(255)
   comentario    String      @db.VarChar(8)
   data          DateTime    @default(now())
-  oss           Os          @relation(fields: [os], references: [id])
-  colaboradores Colaborador @relation(fields: [colaborador], references: [matricula])
+  oss           Os          @relation("possui", fields: [os], references: [id])
+  colaboradores Colaborador @relation("faz", fields: [colaborador], references: [matricula])
 }
