@@ -1,40 +1,35 @@
 const { PrismaClient } = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const colaboradores = require('../docs/data/colaboradores.json');
-const os = require("../docs/data/oss.json");
-const comentarios = require("../docs/data/colaboradores.json");
+const colaboradores = require("../docs/data/colaboradores.json");
+const oss = require("../docs/data/oss.json");
+const comentarios = require("../docs/data/comentarios.json");
 
 async function main() {
-    for (const c in colaboradores) {
+    for (const colaborador of colaboradores) {
         await prisma.colaborador.create({
-            data: c,
+            data: colaborador
         });
-        console.log('Created colaborador')
     }
-
-    for (const o in os) {
+    for (const os of oss) {
         await prisma.os.create({
-            data: o,
+            data: os
         });
-        console.log('Created os')
     }
-
-    for (const c in comentarios) {
+    for (const comentario of comentarios) {
         await prisma.comentario.create({
-            data: c,
+            data: comentario
         });
-        console.log('Created comentario')
     }
 }
 
 main()
     .then(async () => {
-        await prisma.$disconnect();
-        console.log("Completed Seeding");
+        await prisma.$disconnect()
+        console.log('Seed complete');
     })
     .catch(async (e) => {
-        console.log(e);
-        await prisma.$disconnect();
-        process.exit();
+        console.error(e)
+        await prisma.$disconnect()
+        process.exit(1)
     });
