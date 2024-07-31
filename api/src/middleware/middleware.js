@@ -8,10 +8,8 @@ const validaAcesso = (req, res, next) => {
         if (err != null) res.status(404).json(err).end();
         else next();
     });
-
-    res.status(200).end();
 }
 
 module.exports = {
-    validaAcesso,
+    validaAcesso
 }
